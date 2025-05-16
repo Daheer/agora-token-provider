@@ -12,9 +12,8 @@ def main(context):
     try:
         # Parse request body
         # Appwrite passes the request body as a string, so we need to parse it
-        context.log(context.req)
-        context.log(type(context.req))
-        context.log(context.req.path)
+        context.log(dir(context.req))
+        context.log(context.req.body)
         try:
             body = json.loads(context.req.body)
             context.log(f"Request body: {body}")
