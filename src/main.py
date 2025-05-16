@@ -17,7 +17,7 @@ def main(context):
             context.log(f"Request body: {body}")
         except json.JSONDecodeError:
             context.log("Failed to parse request body as JSON")
-            return context.res.json({"error": "Invalid JSON in request body"}, status_code=400)
+            return context.res.json({"error": "Invalid JSON in request body"})
         
         
         # Get parameters from the request body
@@ -28,7 +28,7 @@ def main(context):
         # Validate required parameters
         if not channel_name:
             context.log("Missing required parameter: channelName")
-            return context.res.json({"error": "channelName is required"}, status_code=400)
+            return context.res.json({"error": "channelName is required"})
             
         # Retrieve Agora credentials from environment variables
         app_id = os.environ.get("AGORA_APP_ID")
@@ -37,7 +37,7 @@ def main(context):
         # Validate that credentials are available
         if not app_id or not app_certificate:
             context.log("Agora credentials not configured")
-            return context.res.json({"error": "Agora credentials are not set"}, status_code=500)
+            return context.res.json({"error": "Agora credentials are not set"})
         
         # Generate token
         current_timestamp = int(time.time())
@@ -63,4 +63,4 @@ def main(context):
         
     except Exception as e:
         context.error(f"Error generating token: {str(e)}")
-        return context.res.json({"error": str(e)}, status_code=500)
+        return context.res.json({"error": str(e)})
