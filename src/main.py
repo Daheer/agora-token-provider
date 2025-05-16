@@ -12,15 +12,14 @@ def main(context):
     try:
         # Parse request body
         # Appwrite passes the request body as a string, so we need to parse it
-        if context.req.body:
-            try:
-                body = json.loads(context.req.body)
-                context.log(f"Request body: {body}")
-            except json.JSONDecodeError:
-                context.log("Failed to parse request body as JSON")
-                return context.res.json({"error": "Invalid JSON in request body"}, status_code=400)
-        else:
-            body = {}
+        
+        try:
+            body = json.loads(context.req.body)
+            context.log(f"Request body: {body}")
+        except json.JSONDecodeError:
+            context.log("Failed to parse request body as JSON")
+            return context.res.json({"error": "Invalid JSON in request body"}, status_code=400)
+        
         
         # Get parameters from the request body
         channel_name = body.get("channelName")
